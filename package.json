@@ -1,0 +1,11 @@
+{
+  "name": "webappimpactoback",
+  "version": "1.0.0",
+  "description": "Backend de la web app impacto, proyecto fin de grado DAW de david saez rodriguez",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Saez Rodriguez",
+  "license": "ISC"
+}
