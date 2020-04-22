@@ -1,15 +1,29 @@
-// Import configuration 
-var config = require('./config.json'); 
-// Express 
-var express = require('express'); 
-// Serve-Static 
-var serveStatic = require('serve-static'); 
-// Body-Parser 
-var bodyParser = require('body-parser'); 
-// Multer 
-var multer = require('multer'); 
-// PostgreSQL 
-var massive = require("massive"); 
+'use strict'
+const cors = require('cors');
+const authRoutes = require('./auth/auth.routes');
+const express = require('express');
+const propierties = require('./config/properties');
+const DB = require('./config/db');
+// init DB
+DB();
 
-var massiveInstance = massive.connectSync({connectionString : connectionString});
-var db;
+const app = express();
+const router = express.Router();
+
+const bodyParser = require('body-parser');
+const bodyParserJSON = bodyParser.json();
+const bodyParserURLEncoded = bodyParser.urlencoded({ extended: true });
+
+app.use(bodyParserJSON);
+app.use(bodyParserURLEncoded);
+
+app.use(cors());
+
+app.use('/api', router);
+
+authRoutes(router);
+router.get('/', (req, res) => {
+  res.send('Hello from home');
+});
+app.use(router);
+app.listen(propierties.PORT, () => console.log(`Server runing on port ${propierties.PORT}`));

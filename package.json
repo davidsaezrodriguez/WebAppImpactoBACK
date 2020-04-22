@@ -2,7 +2,7 @@
   "name": "webappimpactoback",
   "version": "1.0.0",
   "description": "Backend de la web app impacto, proyecto fin de grado DAW de david saez rodriguez",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon server.js"
   },
