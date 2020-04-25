@@ -2,18 +2,16 @@
   "name": "webappimpactoback",
   "version": "1.0.0",
   "description": "Backend de la web app impacto, proyecto fin de grado DAW de david saez rodriguez",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
   "author": "David Saez Rodriguez",
   "license": "ISC",
-  "express": {
-    "port": 80
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1"
   },
