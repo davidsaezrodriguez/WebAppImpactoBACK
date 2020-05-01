@@ -3,15 +3,16 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'secretkey123456';
 
-exports.createUser = (req, res, next) => {
+exports.createUser = (req, res) => {
   const newUser = {
-    name: req.body.name,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password)
+    dni: req.body.dni,
+    nombre: req.body.nombre,
+    password: bcrypt.hashSync(req.body.password),
+    acceso: req.body.acceso
   }
 
   User.create(newUser, (err, user) => {
-    if (err && err.code === 11000) return res.status(409).send('Email already exists');
+    if (err && err.code === 11000) return res.status(409).send('DNI ya existe');
     if (err) return res.status(500).send('Server error');
     const expiresIn = 24 * 60 * 60;
     const accessToken = jwt.sign({ id: user.id },
@@ -19,8 +20,8 @@ exports.createUser = (req, res, next) => {
         expiresIn: expiresIn
       });
     const dataUser = {
-      name: user.name,
-      email: user.email,
+      dni: user.dni,
+      nombre: user.nombre,
       accessToken: accessToken,
       expiresIn: expiresIn
     }
@@ -29,17 +30,17 @@ exports.createUser = (req, res, next) => {
   });
 }
 
-exports.loginUser = (req, res, next) => {
+exports.loginUser = (req, res) => {
   const userData = {
-    email: req.body.email,
+    dni: req.body.dni,
     password: req.body.password
   }
-  User.findOne({ email: userData.email }, (err, user) => {
+  User.findOne({ dni: userData.dni }, (err, user) => {
     if (err) return res.status(500).send('Server error!');
 
     if (!user) {
-      // email does not exist
-      res.status(409).send({ message: 'Something is wrong' });
+      // dni no existe
+      res.status(409).send({ message: 'DNI no existe' });
     } else {
       const resultPassword = bcrypt.compareSync(userData.password, user.password);
       if (resultPassword) {
@@ -54,8 +55,8 @@ exports.loginUser = (req, res, next) => {
         }
         res.send({ dataUser });
       } else {
-        // password wrong
-        res.status(409).send({ message: 'Something is wrong' });
+        // password incorecta
+        res.status(409).send({ message: 'Password incorrecta' });
       }
     }
   });
