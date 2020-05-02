@@ -5,13 +5,13 @@ const userSchema = new Schema({
   dni: {
     type: String,
     required: true,
-    trim: true, //limpiar espacios
+    trim: true,
     unique: true
   },
   nombre: {
     type: String,
     required: true,
-    trim: true,
+    trim: true
   },
   password: {
     type: String,

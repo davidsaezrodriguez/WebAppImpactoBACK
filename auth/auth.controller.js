@@ -5,13 +5,13 @@ const SECRET_KEY = 'secretkey123456';
 
 exports.createUser = (req, res) => {
   const newUser = {
-    dni: req.body.dni,
     nombre: req.body.nombre,
+    dni: req.body.dni,
     password: bcrypt.hashSync(req.body.password),
-    acceso: req.body.acceso
+    acceso : req.body.acceso
   }
 
-  User.create(newUser, (err, user) => {
+  User.create(newUser, (err, user,next) => {
     if (err && err.code === 11000) return res.status(409).send('DNI ya existe');
     if (err) return res.status(500).send('Server error');
     const expiresIn = 24 * 60 * 60;
@@ -20,10 +20,11 @@ exports.createUser = (req, res) => {
         expiresIn: expiresIn
       });
     const dataUser = {
-      dni: user.dni,
       nombre: user.nombre,
+      dni: user.dni,
       accessToken: accessToken,
-      expiresIn: expiresIn
+      expiresIn: expiresIn,
+      acceso : user.acceso
     }
     // response 
     res.send({ dataUser });
