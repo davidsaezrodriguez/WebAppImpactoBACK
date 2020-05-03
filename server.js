@@ -1,27 +1,29 @@
 'use strict'
-const cors = require('cors');
-const authRoutes = require('./auth/auth.routes');
 const express = require('express');
 const bodyParser = require('body-parser');
-const propierties = require('./config/properties');
-const DB = require('./config/db');
-// init DB
+const propiedades = require('./configuracionConexionDB/properties');
+const rutas = require('./scriptsServidor/rutas');
+const DB = require('./configuracionConexionDB/db');
+
+// Realizamos conexion con base de datos
 DB();
 
+// Inicializamos la app express 
 const app = express();
-const router = express.Router();
 
 // Con body parser transformamos la respuesta post en json y para asi poder coger variable: valor eon rea.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors());
-
+// Inicializamos las rutas 
+const router = express.Router();
 app.use('/api', router);
 
-authRoutes(router);
+rutas(router);
 router.get('/', (req, res) => {
   res.send('Pagina de inicio');
 });
 app.use(router);
-app.listen(propierties.PORT, () => console.log(`Server runing on port ${propierties.PORT}`));
+
+// Indicamos a la app express que puerto tiene que escuchar
+app.listen(propiedades.PUERTO, () => console.log(`Servidor funcionando en puerto ${propiedades.PUERTO}`));

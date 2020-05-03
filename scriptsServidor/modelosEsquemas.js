@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.set('useCreateIndex', true);
-const userSchema = new Schema({
+
+const usuario = new Schema({
   dni: {
     type: String,
     required: true,
@@ -27,4 +28,27 @@ const userSchema = new Schema({
   timestamps: true
 });
 
-module.exports = userSchema;
+
+const tabla = new Schema({
+  dia: {
+    ejercicio: {
+      nombre: {
+        type: String,
+        required: true,
+        trim: true
+      },
+        repeticiones: {
+        type: String,
+        required: true,
+        trim: true
+      }
+    }
+  }
+}, {
+  timestamps: true
+});
+
+module.exports =  {
+  usuario,
+  tabla
+}
