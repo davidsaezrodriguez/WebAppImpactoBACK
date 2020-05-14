@@ -9,6 +9,7 @@ esquemas.usuario.statics = {
     user.save(cb);
   },
   login: function (query, cb) {
+    
     this.find(query, cb);
   }
 }

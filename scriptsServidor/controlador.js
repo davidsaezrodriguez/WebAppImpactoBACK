@@ -19,10 +19,7 @@ exports.crearUsuario = (req, res) => {
 
     //Creamos token de acceso
     const expiresIn = 24 * 60 * 60;
-    const accessToken = jwt.sign({ id: user.id },
-      SECRET_KEY, {
-      expiresIn: expiresIn
-    });
+    const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
 
     // Datos que mostramos en pantalla 
     const datosUsuario = {
@@ -37,16 +34,20 @@ exports.crearUsuario = (req, res) => {
 }
 
 exports.loginUsuario = (req, res) => {
+  // Recogemos datos recibidos 
   const datosUsuario = {
     dni: req.body.dni,
     password: req.body.password
   }
+
+  // Buscamos el usuario en la base de datos
   funciones.modeloUsuario.findOne({ dni: datosUsuario.dni }, (err, user) => {
     if (err) return res.status(500).send('Error en el servidor');
     if (!user) {
-      // Error si el dni no exustre
+      // Error si el dni no existe
       res.status(409).send({ message: 'DNI no existe' });
     } else {
+      
       // Comparamos la contraseña introducida con la de la base de datos
       const resultPassword = bcrypt.compareSync(datosUsuario.password, user.password);
       if (resultPassword) {
@@ -54,7 +55,7 @@ exports.loginUsuario = (req, res) => {
         //Creamos token de acceso
         const expiresIn = 24 * 60 * 60;
         const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
-        
+
         // Datos que mostramos en pantalla 
         const datosUsuario = {
           name: user.name,
@@ -66,7 +67,7 @@ exports.loginUsuario = (req, res) => {
 
       } else {
         // Error si la contraseña es incorecta
-        res.status(409).send({ message: 'La ontraseña es incorrecta' });
+        res.status(409).send({ message: 'La contraseña es incorrecta' });
       }
     }
   });

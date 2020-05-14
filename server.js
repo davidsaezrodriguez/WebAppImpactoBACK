@@ -17,12 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Inicializamos las rutas 
 const router = express.Router();
-app.use('/api', router);
 
 rutas(router);
-router.get('/', (req, res) => {
-  res.send('Pagina de inicio');
-});
 app.use(router);
 
 // Indicamos a la app express que puerto tiene que escuchar
