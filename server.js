@@ -20,7 +20,7 @@ app.use(cors(
             origin: "http://localhost:4200/" // Ruta de localhost para que la api nos deje acceder desde el servidor de desarrollo
         },
         {
-            origin: "https://webappimpactoback.herokuapp.com/" // Ruta de heroku para que la api nos deje acceder desde el servidor de produccion
+            origin: "https://webappimpactofront.herokuapp.com/" // Ruta de heroku para que la api nos deje acceder desde el servidor de produccion
         }
     ]
 ));
