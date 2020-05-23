@@ -54,12 +54,16 @@ exports.loginUsuario = (req, res) => {
 
         //Creamos token de acceso
         const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
+        const accessToken = jwt.sign({ 
+          id: user.id,
+          nombre: user.nombre,
+          dni: user.dni,
+          acceso: user.acceso
+        }, SECRET_KEY, { expiresIn: expiresIn });
 
-        // Datos que mostramos en pantalla 
+        // Datos que devolvemos en la llamada 
         const datosUsuario = {
-          name: user.name,
-          email: user.email,
+          id: user.id,
           accessToken: accessToken,
           expiresIn: expiresIn
         }
