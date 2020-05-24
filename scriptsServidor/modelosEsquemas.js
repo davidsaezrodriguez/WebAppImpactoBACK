@@ -48,7 +48,12 @@ const tabla = new Schema({
   timestamps: true
 });
 
+usuario.statics={}
+
+const modeloUsuario = mongoose.model('Usuarios', usuario);
+const modeloTabla = mongoose.model('Tablas', tabla);
+
 module.exports =  {
-  usuario,
-  tabla
+  modeloUsuario,
+  modeloTabla
 }

@@ -1,4 +1,4 @@
-const funciones = require('./funciones');
+const funciones = require('./modelosEsquemas');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'secretkey123456';
@@ -47,14 +47,14 @@ exports.loginUsuario = (req, res) => {
       // Error si el dni no existe
       res.status(409).send({ message: 'DNI no existe' });
     } else {
-      
+
       // Comparamos la contraseña introducida con la de la base de datos
       const resultPassword = bcrypt.compareSync(datosUsuario.password, user.password);
       if (resultPassword) {
 
         //Creamos token de acceso
         const expiresIn = 24 * 60 * 60;
-        const accessToken = jwt.sign({ 
+        const accessToken = jwt.sign({
           id: user.id,
           nombre: user.nombre,
           dni: user.dni,
@@ -74,6 +74,14 @@ exports.loginUsuario = (req, res) => {
         res.status(409).send({ message: 'La contraseña es incorrecta' });
       }
     }
+  });
+}
+
+// Buscamos todos los usuarios que no tengan nivel de acceso 1 (admin) y enviamos nombre ( _id se manda automatico)
+exports.listarUsuarios = (req, res) => {
+  funciones.modeloUsuario.find({acceso: {$ne: "1"}}, { "nombre": 1 }, (err, usuarios) => {
+    if (err) return res.status(500).send('Error en el servidor');
+    res.send({ usuarios });
   });
 }
 
