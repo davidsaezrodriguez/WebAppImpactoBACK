@@ -79,9 +79,41 @@ exports.loginUsuario = (req, res) => {
 
 // Buscamos todos los usuarios que no tengan nivel de acceso 1 (admin) y enviamos nombre ( _id se manda automatico)
 exports.listarUsuarios = (req, res) => {
-  funciones.modeloUsuario.find({acceso: {$ne: "1"}}, { "nombre": 1 }, (err, usuarios) => {
+  funciones.modeloUsuario.find({ acceso: { $ne: "1" } }, { "nombre": 1 }, (err, usuarios) => {
     if (err) return res.status(500).send('Error en el servidor');
+    //Enviamos usuarios que nos ha devuelto la bd
     res.send({ usuarios });
+  });
+}
+
+exports.crearTabla = (req, res) => {
+  // Recogemos datos recibidos y creamos nueva tabla
+  const nuevaTabla = req.body.tabla;
+  funciones.modeloTabla.create(nuevaTabla, (err, tabla, next) => {
+    // Posibles errores
+    if (err) return res.status(500).send('Error en el servidor');
+    if (err) return res.send({ err })
+    res.send({ tabla });
+  });
+}
+
+exports.listarTablasUsuario = (req, res) => {
+  // Recogemos idUsuario recibido
+  const idUsuario = req.body.idUsuario;
+  funciones.modeloTabla.find({ usuario: idUsuario }, (err, tablas) => {
+    if (err) return res.status(500).send('Error en el servidor');
+    //Enviamos tablas del usuario que nos ha devuelto la bd
+    console.log(tablas);
+    res.send({ tablas });
+  });
+}
+exports.buscarTabla = (req, res) => {
+  // Recogemos idTabla recibido
+  const idTabla = req.body.idTabla;
+  funciones.modeloTabla.find({ _id: idTabla }, (err, tabla) => {
+    if (err) return res.status(500).send('Error en el servidor');
+    //Enviamos tablas del usuario que nos ha devuelto la bd
+    res.send({ tabla });
   });
 }
 

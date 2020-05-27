@@ -30,30 +30,43 @@ const usuario = new Schema({
 
 
 const tabla = new Schema({
-  dia: {
-    ejercicio: {
-      nombre: {
-        type: String,
-        required: true,
-        trim: true
-      },
-        repeticiones: {
-        type: String,
-        required: true,
-        trim: true
-      }
+  usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'usuario'
+  },
+  nombre: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  dia: [
+    {
+      ejercicio: [
+        {
+          nombre: {
+            type: String,
+            required: true,
+            trim: true
+          },
+          repeticiones: {
+            type: String,
+            required: true,
+            trim: true
+          }
+        }
+      ]
     }
-  }
+  ]
 }, {
   timestamps: true
 });
 
-usuario.statics={}
+usuario.statics = {}
 
 const modeloUsuario = mongoose.model('Usuarios', usuario);
 const modeloTabla = mongoose.model('Tablas', tabla);
 
-module.exports =  {
+module.exports = {
   modeloUsuario,
   modeloTabla
 }

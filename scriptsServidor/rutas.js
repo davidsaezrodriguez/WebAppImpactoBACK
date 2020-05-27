@@ -16,4 +16,16 @@ module.exports = (router) => {
     router.post('/listarUsuarios', function (req, res) {
         controlador.listarUsuarios(req, res);
     });
+
+    //Rutas para tablas
+    router.post('/crearTabla', function (req, res) {
+        controlador.crearTabla(req, res);
+    });
+    router.post('/listarTablasUsuario', function (req, res) {
+        controlador.listarTablasUsuario(req, res);
+    });
+    router.post('/buscarTabla', function (req, res) {
+        controlador.buscarTabla(req, res);
+    });
+    
 }
