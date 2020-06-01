@@ -52,6 +52,10 @@ const tabla = new Schema({
             type: String,
             required: true,
             trim: true
+          },
+          pesoMax: {
+            type: String,
+            trim: true
           }
         }
       ]

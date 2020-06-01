@@ -30,5 +30,8 @@ module.exports = (router) => {
     router.post('/buscarTabla', function (req, res) {
         controladorTablas.buscarTabla(req, res);
     });
+    router.post('/actualizarPeso', function (req, res) {
+        controladorTablas.actualizarPeso(req, res);
+    });
     
 }

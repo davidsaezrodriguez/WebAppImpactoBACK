@@ -32,3 +32,20 @@ exports.buscarTabla = (req, res) => {
     });
 }
 
+exports.actualizarPeso = (req, res) => {
+    // Recogemos el array de cambios que recibimos del front
+    const arrayCambiosPesosMax = req.body;
+    console.log(arrayCambiosPesosMax)
+    // Recorremos el array cogiendo las variables nacesarias y vamos cambiando el pesoMax ejercicio a ejercicio
+    for (i = 0; i < arrayCambiosPesosMax.length; i++) {
+        const idTabla = arrayCambiosPesosMax[i].idTabla;
+        const idDia = arrayCambiosPesosMax[i].idDia;
+        const idEjercicio = arrayCambiosPesosMax[i].idEjercicio;
+        const pesoMax = arrayCambiosPesosMax[i].pesoMax;
+        modelos.modeloTabla.update({ "_id": { $eq: idTabla } },
+        { $set: { "dia.$[d].ejercicio.$[ejer].pesoMax": pesoMax } },
+        { arrayFilters: [{ "d._id": { $eq: idDia } }, { "ejer._id": { $eq: idEjercicio } }] }, (err, ejercicio) => {
+            if (err) return console.log(err);
+        });
+    }
+}
