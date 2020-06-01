@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'secretkey123456';
 
-exports.crearUsuario = (req, res) => {
+exports.registrarUsuario = (req, res) => {
   // Recogemos datos recibidos y creamos nuevo usuario
   const nuevoUsuario = {
     nombre: req.body.nombre,
@@ -53,7 +53,7 @@ exports.loginUsuario = (req, res) => {
       if (resultPassword) {
 
         //Creamos token de acceso
-        const expiresIn = 24 * 60 * 60;
+        const expiresIn = 30 * 60;
         const accessToken = jwt.sign({
           id: user.id,
           nombre: user.nombre,
@@ -113,7 +113,7 @@ exports.buscarTabla = (req, res) => {
   funciones.modeloTabla.find({ _id: idTabla }, (err, tabla) => {
     if (err) return res.status(500).send('Error en el servidor');
     //Enviamos tablas del usuario que nos ha devuelto la bd
-    res.send({ tabla });
+    res.send({tabla});
   });
 }
 
