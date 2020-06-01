@@ -1,4 +1,5 @@
-const controlador = require('./controlador');
+const controladorUsuarios = require('./controladorUsuarios');
+const controladorTablas = require('./controladorTablas');
 
 module.exports = (router) => {
     router.get('/', (req, res) => {
@@ -7,24 +8,27 @@ module.exports = (router) => {
 
     //Rutas para usuario
     router.post('/registrarUsuario', function (req, res) {
-        controlador.registrarUsuario(req, res);
+        controladorUsuarios.registrarUsuario(req, res);
     });
     router.post('/loginUsuario', function (req, res) {
-        controlador.loginUsuario(req, res);
+        controladorUsuarios.loginUsuario(req, res);
     });
     router.post('/listarUsuarios', function (req, res) {
-        controlador.listarUsuarios(req, res);
+        controladorUsuarios.listarUsuarios(req, res);
+    });
+    router.post('/listarUsuariosFiltrarNivel', function (req, res) {
+        controladorUsuarios.listarUsuariosFiltrarNivel(req, res);
     });
 
     //Rutas para tablas
     router.post('/crearTabla', function (req, res) {
-        controlador.crearTabla(req, res);
+        controladorTablas.crearTabla(req, res);
     });
     router.post('/listarTablasUsuario', function (req, res) {
-        controlador.listarTablasUsuario(req, res);
+        controladorTablas.listarTablasUsuario(req, res);
     });
     router.post('/buscarTabla', function (req, res) {
-        controlador.buscarTabla(req, res);
+        controladorTablas.buscarTabla(req, res);
     });
     
 }

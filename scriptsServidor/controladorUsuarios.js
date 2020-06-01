@@ -1,4 +1,4 @@
-const funciones = require('./modelosEsquemas');
+const modelos = require('./modelosEsquemas');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'secretkey123456';
@@ -12,7 +12,7 @@ exports.registrarUsuario = (req, res) => {
     acceso: req.body.acceso
   }
 
-  funciones.modeloUsuario.create(nuevoUsuario, (err, user, next) => {
+  modelos.modeloUsuario.create(nuevoUsuario, (err, user, next) => {
     // Posibles errores
     if (err && err.code === 11000) return res.status(409).send('DNI ya existe');
     if (err) return res.status(500).send('Error en el servidor');
@@ -41,7 +41,7 @@ exports.loginUsuario = (req, res) => {
   }
 
   // Buscamos el usuario en la base de datos
-  funciones.modeloUsuario.findOne({ dni: datosUsuario.dni }, (err, user) => {
+  modelos.modeloUsuario.findOne({ dni: datosUsuario.dni }, (err, user) => {
     if (err) return res.status(500).send('Error en el servidor');
     if (!user) {
       // Error si el dni no existe
@@ -79,41 +79,19 @@ exports.loginUsuario = (req, res) => {
 
 // Buscamos todos los usuarios que no tengan nivel de acceso 1 (admin) y enviamos nombre ( _id se manda automatico)
 exports.listarUsuarios = (req, res) => {
-  funciones.modeloUsuario.find({ acceso: { $ne: "1" } }, { "nombre": 1 }, (err, usuarios) => {
+  modelos.modeloUsuario.find({ acceso: { $ne: "1" } }, { "nombre": 1 }, (err, usuarios) => {
     if (err) return res.status(500).send('Error en el servidor');
     //Enviamos usuarios que nos ha devuelto la bd
     res.send({ usuarios });
   });
 }
 
-exports.crearTabla = (req, res) => {
-  // Recogemos datos recibidos y creamos nueva tabla
-  const nuevaTabla = req.body.tabla;
-  funciones.modeloTabla.create(nuevaTabla, (err, tabla, next) => {
-    // Posibles errores
+// Buscamos todos los usuarios que tengan el nivel que nos llega desde el front. El nivel habra que mandarle en formato { "acceso" : [1,3,4] }
+exports.listarUsuariosFiltrarNivel = (req, res) => {
+  const acceso = req.body.acceso;
+  modelos.modeloUsuario.find({ acceso: { $in: acceso } }, { "nombre": 1 }, (err, usuarios) => {
     if (err) return res.status(500).send('Error en el servidor');
-    if (err) return res.send({ err })
-    res.send({ tabla });
+    //Enviamos usuarios que nos ha devuelto la bd
+    res.send({ usuarios });
   });
 }
-
-exports.listarTablasUsuario = (req, res) => {
-  // Recogemos idUsuario recibido
-  const idUsuario = req.body.idUsuario;
-  funciones.modeloTabla.find({ usuario: idUsuario }, (err, tablas) => {
-    if (err) return res.status(500).send('Error en el servidor');
-    //Enviamos tablas del usuario que nos ha devuelto la bd
-    console.log(tablas);
-    res.send({ tablas });
-  });
-}
-exports.buscarTabla = (req, res) => {
-  // Recogemos idTabla recibido
-  const idTabla = req.body.idTabla;
-  funciones.modeloTabla.find({ _id: idTabla }, (err, tabla) => {
-    if (err) return res.status(500).send('Error en el servidor');
-    //Enviamos tablas del usuario que nos ha devuelto la bd
-    res.send({tabla});
-  });
-}
-
