@@ -1,7 +1,7 @@
 const modelos = require('./modelosEsquemas');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const SECRET_KEY = 'secretkey123456';
+const SECRET_KEY = 'claveGimnasioImpacto2020';
 
 exports.registrarUsuario = (req, res) => {
   // Recogemos datos recibidos y creamos nuevo usuario
@@ -16,20 +16,8 @@ exports.registrarUsuario = (req, res) => {
     // Posibles errores
     if (err && err.code === 11000) return res.status(409).send('DNI ya existe');
     if (err) return res.status(500).send('Error en el servidor');
-
-    //Creamos token de acceso
-    const expiresIn = 24 * 60 * 60;
-    const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
-
-    // Datos que mostramos en pantalla 
-    const datosUsuario = {
-      nombre: user.nombre,
-      dni: user.dni,
-      accessToken: accessToken,
-      expiresIn: expiresIn,
-      acceso: user.acceso
-    }
-    res.send({ datosUsuario });
+    
+    res.send('Usuario creado correctamente');
   });
 }
 
@@ -53,7 +41,7 @@ exports.loginUsuario = (req, res) => {
       if (resultPassword) {
 
         //Creamos token de acceso
-        const expiresIn = 30 * 60;
+        const expiresIn = 120 * 60;
         const accessToken = jwt.sign({
           id: user.id,
           nombre: user.nombre,
