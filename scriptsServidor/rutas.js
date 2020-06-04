@@ -14,12 +14,22 @@ module.exports = (router) => {
     router.post('/loginUsuario', function (req, res) {
         controladorUsuarios.loginUsuario(req, res);
     });
-    router.post('/listarUsuarios', comprobarToken, function (req, res) {
+    router.get('/listarUsuarios', comprobarToken, function (req, res) {
         controladorUsuarios.listarUsuarios(req, res);
     });
     router.post('/listarUsuariosFiltrarNivel', comprobarToken, function (req, res) {
         controladorUsuarios.listarUsuariosFiltrarNivel(req, res);
     });
+    router.post('/buscarUsuario', comprobarToken, function (req, res) {
+        controladorUsuarios.buscarUsuario(req, res);
+    });
+    router.post('/cambiarContrasena', comprobarToken, function (req, res) {
+        controladorUsuarios.cambiarContrasena(req, res);
+    });
+    router.post('/modificarDatosUsuario', comprobarToken, function (req, res) {
+        controladorUsuarios.modificarDatosUsuario(req, res);
+    });
+    
 
     //Rutas para tablas
     router.post('/crearTabla', comprobarToken, function (req, res) {

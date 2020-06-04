@@ -9,7 +9,7 @@ exports.crearTabla = (req, res) => {
         // Posibles errores
         if (err) return res.status(500).send('Error en el servidor');
         if (err) return res.send({ err })
-        res.send({ tabla });
+        res.send(tabla);
     });
 }
 
@@ -45,7 +45,7 @@ exports.actualizarPeso = (req, res) => {
         modelos.modeloTabla.update({ "_id": { $eq: idTabla } },
         { $set: { "dia.$[d].ejercicio.$[ejer].pesoMax": pesoMax } },
         { arrayFilters: [{ "d._id": { $eq: idDia } }, { "ejer._id": { $eq: idEjercicio } }] }, (err, ejercicio) => {
-            if (err) return console.log(err);
+            if (err) return res.status(500).send('Error en el servidor');
         });
     }
 }

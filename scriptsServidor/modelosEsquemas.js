@@ -23,6 +23,14 @@ const usuario = new Schema({
     type: String,
     required: true,
     trim: true
+  },
+  domicilio: {
+    type: String,
+    trim: true
+  },
+  telefono: {
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true
