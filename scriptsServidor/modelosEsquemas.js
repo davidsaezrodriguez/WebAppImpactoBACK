@@ -73,12 +73,48 @@ const tabla = new Schema({
   timestamps: true
 });
 
+const ejercicio = new Schema({
+  nombre: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  zona: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  explicacion: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  consejos: {
+    type: String,
+    trim: true
+  },
+  imagen: {
+    type: String,
+    trim: true
+  },
+  video: {
+    type: String,
+    trim: true
+  }
+}, {
+  timestamps: true
+});
+
+
 usuario.statics = {}
 
 const modeloUsuario = mongoose.model('Usuarios', usuario);
 const modeloTabla = mongoose.model('Tablas', tabla);
+const modeloEjercicios = mongoose.model('Ejercicios', ejercicio);
+
 
 module.exports = {
   modeloUsuario,
-  modeloTabla
+  modeloTabla,
+  modeloEjercicios
 }

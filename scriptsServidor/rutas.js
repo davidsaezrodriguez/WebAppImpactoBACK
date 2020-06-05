@@ -1,5 +1,7 @@
 const controladorUsuarios = require('./controladorUsuarios');
 const controladorTablas = require('./controladorTablas');
+const controladorEjercicios = require('./controladorEjercicios');
+
 const comprobarToken = require('./token');
 
 module.exports = (router) => {
@@ -29,7 +31,7 @@ module.exports = (router) => {
     router.post('/modificarDatosUsuario', comprobarToken, function (req, res) {
         controladorUsuarios.modificarDatosUsuario(req, res);
     });
-    
+
 
     //Rutas para tablas
     router.post('/crearTabla', comprobarToken, function (req, res) {
@@ -45,17 +47,20 @@ module.exports = (router) => {
         controladorTablas.actualizarPeso(req, res);
     });
 
-}
 
-// function comprobarToken(req, res, next) {
-//     var bearerToken;
-//     var bearerHeader = req.headers["authorization"];
-//     if (typeof bearerHeader !== 'undefined') {
-//         var bearer = bearerHeader.split(" ");
-//         bearerToken = bearer[1];
-//         req.token = bearerToken;
-//         next();
-//     } else {
-//         res.send('Error token no valido ');
-//     }
-// }
+
+
+    // Rutas para ejercicios
+    router.post('/crearEjercicio', comprobarToken, function (req, res) {
+        controladorEjercicios.crearEjercicio(req, res);
+    });
+
+    router.post('/listarEjerciciosZona', comprobarToken, function (req, res) {
+        controladorEjercicios.listarEjerciciosZona(req, res);
+    });
+    router.post('/buscarEjercicio', comprobarToken, function (req, res) {
+        controladorEjercicios.buscarEjercicio(req, res);
+    });
+
+
+}
