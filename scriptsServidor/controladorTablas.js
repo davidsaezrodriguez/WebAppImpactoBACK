@@ -35,7 +35,6 @@ exports.buscarTabla = (req, res) => {
 exports.actualizarPeso = (req, res) => {
     // Recogemos el array de cambios que recibimos del front
     const arrayCambiosPesosMax = req.body;
-    console.log(arrayCambiosPesosMax)
     // Recorremos el array cogiendo las variables nacesarias y vamos cambiando el pesoMax ejercicio a ejercicio
     for (i = 0; i < arrayCambiosPesosMax.length; i++) {
         const idTabla = arrayCambiosPesosMax[i].idTabla;

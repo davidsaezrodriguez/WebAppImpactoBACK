@@ -34,3 +34,14 @@ exports.buscarEjercicio = (req, res) => {
         res.send( ejercicio );
     });
 }
+
+// Eliminar ejercicio
+// Buscamos ejercicio en la bbdd
+exports.eliminarEjercicio = (req, res) => {
+    // Recogemos id del ejercicio a eliminar
+    const idEjercicio = req.body.idEjercicio;
+    modelos.modeloEjercicios.remove({ _id : idEjercicio }, (err, ejercicio) => {
+        if (err) return res.status(500).send('Error en el servidor');
+        res.send(ejercicio);
+    });
+}

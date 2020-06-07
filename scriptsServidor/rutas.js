@@ -61,6 +61,10 @@ module.exports = (router) => {
     router.post('/buscarEjercicio', comprobarToken, function (req, res) {
         controladorEjercicios.buscarEjercicio(req, res);
     });
+    router.post('/eliminarEjercicio', comprobarToken, function (req, res) {
+        controladorEjercicios.eliminarEjercicio(req, res);
+    });
+
 
 
 }

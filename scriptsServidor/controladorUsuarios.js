@@ -118,7 +118,6 @@ exports.cambiarContrasena = (req, res) => {
 
 // Cambiamos contraseña 
 exports.modificarDatosUsuario = (req, res) => {
-  console.log(req)
   const usuarioActualizar = {
     idUsuario: req.body.id,
     nombre: req.body.nombre,
