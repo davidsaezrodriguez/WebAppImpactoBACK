@@ -19,10 +19,17 @@ exports.crearSeguimiento = (req, res) => {
 exports.buscarSeguimiento = (req, res) => {
     // Recogemos idUsuario recibido
     const idUsuario = req.body.idUsuario;
-    modelos.modeloSeguimiento.find({ usuario: idUsuario }, (err, seguimiento) => {
+    modelos.modeloSeguimiento.findOne({ usuario: idUsuario }, (err, seguimiento) => {
         if (err) return res.status(500).send('Error en el servidor');
         //Enviamos seguimiento del usuario que nos ha devuelto la bd
-        res.send(seguimiento);
+        // Creamos un nuevo objeto donde invertimos los array para mostrarlos de mas nuevo a mas antiguo
+        const seguimientoFormateado = {
+            _id : seguimiento._id,
+            usuario: seguimiento.usuario,
+            indice: seguimiento.indice.reverse(),
+            medida: seguimiento.medida.reverse()
+        };
+        res.send(seguimientoFormateado);
     });
 }
 
@@ -57,7 +64,7 @@ exports.eliminarIndice = (req, res) => {
         { $pull: { indice: { _id: idIndice } } }, (err, seguimiento) => {
             if (err) return res.status(500).send('Error en el servidor');
             res.send({ seguimiento });
-    });
+        });
 }
 
 exports.eliminarMedidas = (req, res) => {
@@ -68,5 +75,5 @@ exports.eliminarMedidas = (req, res) => {
         { $pull: { medida: { _id: idMedida } } }, (err, seguimiento) => {
             if (err) return res.status(500).send('Error en el servidor');
             res.send({ seguimiento });
-    });
+        });
 }

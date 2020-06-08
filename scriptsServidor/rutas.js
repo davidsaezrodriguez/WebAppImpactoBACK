@@ -92,7 +92,7 @@ module.exports = (router) => {
     });
     router.post('/buscarSeguimiento', comprobarToken, function (req, res) {
         controladorSeguimientos.buscarSeguimiento(req, res);
-    });
+    });  
     router.post('/guardarIndice', comprobarToken, function (req, res) {
         controladorSeguimientos.guardarIndice(req, res);
     });
