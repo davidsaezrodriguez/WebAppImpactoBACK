@@ -105,16 +105,131 @@ const ejercicio = new Schema({
   timestamps: true
 });
 
+const dieta = new Schema({
+  usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'usuario'
+  },
+  nombre: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  comida: [
+    {
+      alimento: [
+        {
+          nombre: {
+            type: String,
+            required: true,
+            trim: true
+          },
+          cantidad: {
+            type: String,
+            required: true,
+            trim: true
+          },
+          kcal: {
+            type: Number,
+            trim: true
+          }
+        }
+      ]
+    }
+  ],
+  kcalTotal: {
+    type: Number,
+    trim: true
+  }
+}, {
+  timestamps: true
+});
+
+const seguimiento = new Schema({
+  usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'usuario'
+  },
+  indice: [
+    {
+      fecha: {
+        type: Date,
+        required: true,
+        trim: true
+      },
+      peso: {
+        type: Number,
+        required: true,
+        trim: true
+      },
+      altura: {
+        type: Number,
+        required: true,
+        trim: true
+      },
+      imc: {
+        type: Number,
+        required: true,
+        trim: true
+      },
+      grasa: {
+        type: Number,
+        trim: true
+      }
+    }
+  ],
+  medida: [
+    {
+      fecha: {
+        type: Date,
+        required: true,
+        trim: true
+      },
+      biceps: {
+        type: Number,
+        trim: true
+      },
+      hombros: {
+        type: Number,
+        trim: true
+      },
+      pecho: {
+        type: Number,
+        trim: true
+      },
+      cintura: {
+        type: Number,
+        trim: true
+      },
+      gluteo: {
+        type: Number,
+        trim: true
+      },
+      muslo: {
+        type: Number,
+        trim: true
+      }
+    }
+  ]
+  
+}, {
+  timestamps: true
+});
 
 usuario.statics = {}
 
 const modeloUsuario = mongoose.model('Usuarios', usuario);
 const modeloTabla = mongoose.model('Tablas', tabla);
 const modeloEjercicios = mongoose.model('Ejercicios', ejercicio);
+const modeloDieta = mongoose.model('Dietas', dieta);
+const modeloSeguimiento = mongoose.model('Seguimientos', seguimiento);
+
 
 
 module.exports = {
   modeloUsuario,
   modeloTabla,
-  modeloEjercicios
+  modeloEjercicios,
+  modeloDieta,
+  modeloSeguimiento
 }

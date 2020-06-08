@@ -1,6 +1,10 @@
 const controladorUsuarios = require('./controladorUsuarios');
 const controladorTablas = require('./controladorTablas');
 const controladorEjercicios = require('./controladorEjercicios');
+const controladorDietas = require('./controladorDietas');
+const controladorSeguimientos = require('./controladorSeguimientos');
+
+
 
 const comprobarToken = require('./token');
 
@@ -31,6 +35,9 @@ module.exports = (router) => {
     router.post('/modificarDatosUsuario', comprobarToken, function (req, res) {
         controladorUsuarios.modificarDatosUsuario(req, res);
     });
+    router.post('/eliminarUsuario', comprobarToken, function (req, res) {
+        controladorUsuarios.eliminarUsuario(req, res);
+    });
 
 
     //Rutas para tablas
@@ -46,15 +53,14 @@ module.exports = (router) => {
     router.post('/actualizarPeso', comprobarToken, function (req, res) {
         controladorTablas.actualizarPeso(req, res);
     });
-
-
-
+    router.post('/eliminarTabla', comprobarToken, function (req, res) {
+        controladorTablas.eliminarTabla(req, res);
+    });
 
     // Rutas para ejercicios
     router.post('/crearEjercicio', comprobarToken, function (req, res) {
         controladorEjercicios.crearEjercicio(req, res);
     });
-
     router.post('/listarEjerciciosZona', comprobarToken, function (req, res) {
         controladorEjercicios.listarEjerciciosZona(req, res);
     });
@@ -65,6 +71,40 @@ module.exports = (router) => {
         controladorEjercicios.eliminarEjercicio(req, res);
     });
 
+
+    // Rutas para dietas
+    router.post('/crearDieta', comprobarToken, function (req, res) {
+        controladorDietas.crearDieta(req, res);
+    });
+    router.post('/listarDietasUsuario', comprobarToken, function (req, res) {
+        controladorDietas.listarDietasUsuario(req, res);
+    });
+    router.post('/buscarDieta', comprobarToken, function (req, res) {
+        controladorDietas.buscarDieta(req, res);
+    });
+    router.post('/eliminarDieta', comprobarToken, function (req, res) {
+        controladorDietas.eliminarDieta(req, res);
+    });
+
+    // Rutas para seguimiento
+    router.post('/crearSeguimiento', comprobarToken, function (req, res) {
+        controladorSeguimientos.crearSeguimiento(req, res);
+    });
+    router.post('/buscarSeguimiento', comprobarToken, function (req, res) {
+        controladorSeguimientos.buscarSeguimiento(req, res);
+    });
+    router.post('/guardarIndice', comprobarToken, function (req, res) {
+        controladorSeguimientos.guardarIndice(req, res);
+    });
+    router.post('/guardarMedidas', comprobarToken, function (req, res) {
+        controladorSeguimientos.guardarMedidas(req, res);
+    });
+    router.post('/eliminarIndice', comprobarToken, function (req, res) {
+        controladorSeguimientos.eliminarIndice(req, res);
+    });
+    router.post('/eliminarMedidas', comprobarToken, function (req, res) {
+        controladorSeguimientos.eliminarMedidas(req, res);
+    });
 
 
 }

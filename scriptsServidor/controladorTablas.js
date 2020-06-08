@@ -48,3 +48,12 @@ exports.actualizarPeso = (req, res) => {
         });
     }
 }
+
+exports.eliminarTabla = (req, res) => {
+    // Recogemos idTabla recibido
+    const idTabla = req.body.idTabla;
+    modelos.modeloTabla.deleteOne({ _id: idTabla }, (err, tabla) => {
+        if (err) return res.status(500).send('Error en el servidor');
+        res.send({ tabla });
+    });
+}

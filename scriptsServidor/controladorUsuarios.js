@@ -135,5 +135,14 @@ exports.modificarDatosUsuario = (req, res) => {
     })
 }
 
+exports.eliminarUsuario = (req, res) => {
+  // Recogemos idUsuario recibido
+  const idUsuario = req.body.idUsuario;
+  modelos.modeloUsuario.deleteOne({ _id: idUsuario }, (err, usuario) => {
+      if (err) return res.status(500).send('Error en el servidor');
+      res.send({ usuario });
+  });
+}
+
 
 
