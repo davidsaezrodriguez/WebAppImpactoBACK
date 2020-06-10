@@ -211,7 +211,41 @@ const seguimiento = new Schema({
       }
     }
   ]
-  
+
+}, {
+  timestamps: true
+});
+
+const clase = new Schema({
+  tipo: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  inicio: {
+    type: Date,
+    required: true,
+    trim: true
+  },
+  fin: {
+    type: Date,
+    required: true,
+    trim: true
+  },
+  color: {
+    primary: { type: String },
+    secondary: { type: String }
+  },
+  maxAlumnos: {
+    type: Number,
+    trim: true
+  },
+  alumnos: [
+    {
+      _id: { type: mongoose.Schema.Types.ObjectId,  ref: 'usuario._id' },
+      nombre: { type: String, ref: 'usuario.nombre' }
+    }
+  ]
 }, {
   timestamps: true
 });
@@ -223,6 +257,8 @@ const modeloTabla = mongoose.model('Tablas', tabla);
 const modeloEjercicios = mongoose.model('Ejercicios', ejercicio);
 const modeloDieta = mongoose.model('Dietas', dieta);
 const modeloSeguimiento = mongoose.model('Seguimientos', seguimiento);
+const modeloClase = mongoose.model('Clases', clase);
+
 
 
 
@@ -231,5 +267,6 @@ module.exports = {
   modeloTabla,
   modeloEjercicios,
   modeloDieta,
-  modeloSeguimiento
+  modeloSeguimiento,
+  modeloClase
 }

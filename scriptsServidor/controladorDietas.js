@@ -3,11 +3,11 @@ const modelos = require('./modelosEsquemas');
 exports.crearDieta = (req, res) => {
     // Recogemos datos recibidos y creamos nueva dieta
     const nuevaDieta = req.body.dieta;
-    modelos.modeloDieta.create(nuevaDieta, (err, tabla, next) => {
+    modelos.modeloDieta.create(nuevaDieta, (err, dieta, next) => {
         // Posibles errores
         if (err) return res.status(500).send('Error en el servidor');
         if (err) return res.send({ err })
-        res.send(tabla);
+        res.send(dieta);
     });
 }
 

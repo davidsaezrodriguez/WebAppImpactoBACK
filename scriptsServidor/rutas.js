@@ -3,6 +3,8 @@ const controladorTablas = require('./controladorTablas');
 const controladorEjercicios = require('./controladorEjercicios');
 const controladorDietas = require('./controladorDietas');
 const controladorSeguimientos = require('./controladorSeguimientos');
+const controladorClases = require('./controladorClases');
+
 
 
 
@@ -57,6 +59,7 @@ module.exports = (router) => {
         controladorTablas.eliminarTabla(req, res);
     });
 
+
     // Rutas para ejercicios
     router.post('/crearEjercicio', comprobarToken, function (req, res) {
         controladorEjercicios.crearEjercicio(req, res);
@@ -86,6 +89,7 @@ module.exports = (router) => {
         controladorDietas.eliminarDieta(req, res);
     });
 
+
     // Rutas para seguimiento
     router.post('/crearSeguimiento', comprobarToken, function (req, res) {
         controladorSeguimientos.crearSeguimiento(req, res);
@@ -106,5 +110,37 @@ module.exports = (router) => {
         controladorSeguimientos.eliminarMedidas(req, res);
     });
 
-
+    // Rutas para clases
+    router.post('/crearClase', comprobarToken, function (req, res) {
+        controladorClases.crearClase(req, res);
+    });
+    router.post('/eliminarClase', comprobarToken, function (req, res) {
+        controladorClases.eliminarClase(req, res);
+    });
+    router.post('/listarClases', comprobarToken, function (req, res) {
+        controladorClases.listarClases(req, res);
+    });
+    router.post('/anadirAlumnoClase', comprobarToken, function (req, res) {
+        controladorClases.anadirAlumnoClase(req, res);
+    });
+    router.post('/eliminarAlumnoClase', comprobarToken, function (req, res) {
+        controladorClases.eliminarAlumnoClase(req, res);
+    });
+    router.post('/buscarClase', comprobarToken, function (req, res) {
+        controladorClases.buscarClase(req, res);
+    });
+    router.post('/listarClasesAsiste', comprobarToken, function (req, res) {
+        controladorClases.listarClasesAsiste(req, res);
+    });
+    router.post('/listarClasesNoAsiste', comprobarToken, function (req, res) {
+        controladorClases.listarClasesNoAsiste(req, res);
+    });
+    // router.post('/listarClasesNoLlenas', comprobarToken, function (req, res) {
+    //     controladorClases.listarClasesNoLlenas(req, res);
+    // });
+    // router.post('/listarClasesLlenas', comprobarToken, function (req, res) {
+    //     controladorClases.listarClasesLlenas(req, res);
+    // });
+  
+  
 }

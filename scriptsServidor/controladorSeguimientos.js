@@ -7,7 +7,6 @@ exports.crearSeguimiento = (req, res) => {
         indice: [],
         medida: [],
     }
-    console.log(seguimiento)
     modelos.modeloSeguimiento.create(seguimiento, (err, seguimiento, next) => {
         // Posibles errores
         if (err) return res.status(500).send('Error en el servidor');
