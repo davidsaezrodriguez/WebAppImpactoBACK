@@ -13,10 +13,9 @@ exports.registrarUsuario = (req, res) => {
     domicilio: req.body.domicilio,
     telefono: req.body.telefono
   }
-
   modelos.modeloUsuario.create(nuevoUsuario, (err, user, next) => {
     // Posibles errores
-    if (err && err.code === 11000) return res.status(409).send('DNI ya existe');
+    if (err && err.code === 409) return res.status(409).send('DNI ya existe');
     if (err) return res.status(500).send('Error en el servidor');
     return res.send(user);
   });
@@ -34,7 +33,7 @@ exports.loginUsuario = (req, res) => {
     if (err) return res.status(500).send('Error en el servidor');
     if (!user) {
       // Error si el dni no existe
-      res.status(409).send({ message: 'DNI no existe' });
+      res.status(404).send({ message: 'DNI no existe' });
     } else {
 
       // Comparamos la contraseña introducida con la de la base de datos
@@ -98,7 +97,7 @@ exports.cambiarContrasena = (req, res) => {
   const contraNueva = bcrypt.hashSync(req.body.contraNueva);
 
   modelos.modeloUsuario.findOne({ _id: idUsuario }, (err, usuario) => {
-    if (err) return res.status(500).send('Error en el servidor');
+    if (err) return res.status(404).send('Error con usuario');
     // Comparamos la contraseña introducida con la de la base de datos
     const resultPassword = bcrypt.compareSync(contraVieja, usuario.password);
     if (resultPassword) {
@@ -116,7 +115,7 @@ exports.cambiarContrasena = (req, res) => {
 }
 
 
-// Cambiamos contraseña 
+// Modificamos datos del usuario 
 exports.modificarDatosUsuario = (req, res) => {
   const usuarioActualizar = {
     idUsuario: req.body.id,

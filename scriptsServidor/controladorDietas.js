@@ -10,11 +10,11 @@ exports.crearDieta = (req, res) => {
         res.send(dieta);
     });
 }
-
+// updatedAt
 exports.listarDietasUsuario = (req, res) => {
     // Recogemos idUsuario recibido
     const idUsuario = req.body.idUsuario;
-    modelos.modeloDieta.find({ usuario: idUsuario }, (err, dietas) => {
+    modelos.modeloDieta.find({ usuario: idUsuario }).sort([['updatedAt', -1]]).exec(function (err, dietas) {
         if (err) return res.status(500).send('Error en el servidor');
         //Enviamos dietas del usuario que nos ha devuelto la bd
         res.send({ dietas });

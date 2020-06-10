@@ -16,7 +16,7 @@ exports.crearTabla = (req, res) => {
 exports.listarTablasUsuario = (req, res) => {
     // Recogemos idUsuario recibido
     const idUsuario = req.body.idUsuario;
-    modelos.modeloTabla.find({ usuario: idUsuario }, (err, tablas) => {
+    modelos.modeloTabla.find({ usuario: idUsuario }).sort([['updatedAt', -1]]).exec(function (err, tablas) {
         if (err) return res.status(500).send('Error en el servidor');
         //Enviamos tablas del usuario que nos ha devuelto la bd
         res.send({ tablas });
@@ -42,10 +42,10 @@ exports.actualizarPeso = (req, res) => {
         const idEjercicio = arrayCambiosPesosMax[i].idEjercicio;
         const pesoMax = arrayCambiosPesosMax[i].pesoMax;
         modelos.modeloTabla.update({ "_id": { $eq: idTabla } },
-        { $set: { "dia.$[d].ejercicio.$[ejer].pesoMax": pesoMax } },
-        { arrayFilters: [{ "d._id": { $eq: idDia } }, { "ejer._id": { $eq: idEjercicio } }] }, (err, ejercicio) => {
-            if (err) return res.status(500).send('Error en el servidor');
-        });
+            { $set: { "dia.$[d].ejercicio.$[ejer].pesoMax": pesoMax } },
+            { arrayFilters: [{ "d._id": { $eq: idDia } }, { "ejer._id": { $eq: idEjercicio } }] }, (err, ejercicio) => {
+                if (err) return res.status(500).send('Error en el servidor');
+            });
     }
 }
 
