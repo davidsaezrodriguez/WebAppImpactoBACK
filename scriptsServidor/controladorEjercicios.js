@@ -36,7 +36,6 @@ exports.buscarEjercicio = (req, res) => {
 }
 
 // Eliminar ejercicio
-// Buscamos ejercicio en la bbdd
 exports.eliminarEjercicio = (req, res) => {
     // Recogemos id del ejercicio a eliminar
     const idEjercicio = req.body.idEjercicio;

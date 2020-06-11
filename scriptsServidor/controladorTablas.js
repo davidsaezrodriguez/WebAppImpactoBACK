@@ -22,6 +22,7 @@ exports.listarTablasUsuario = (req, res) => {
         res.send({ tablas });
     });
 }
+
 exports.buscarTabla = (req, res) => {
     // Recogemos idTabla recibido
     const idTabla = req.body.idTabla;

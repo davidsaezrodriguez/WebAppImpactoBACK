@@ -134,6 +134,7 @@ exports.modificarDatosUsuario = (req, res) => {
     })
 }
 
+// Eliminar usuario de bbdd
 exports.eliminarUsuario = (req, res) => {
   // Recogemos idUsuario recibido
   const idUsuario = req.body.idUsuario;

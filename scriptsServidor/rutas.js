@@ -135,12 +135,5 @@ module.exports = (router) => {
     router.post('/listarClasesNoAsiste', comprobarToken, function (req, res) {
         controladorClases.listarClasesNoAsiste(req, res);
     });
-    // router.post('/listarClasesNoLlenas', comprobarToken, function (req, res) {
-    //     controladorClases.listarClasesNoLlenas(req, res);
-    // });
-    // router.post('/listarClasesLlenas', comprobarToken, function (req, res) {
-    //     controladorClases.listarClasesLlenas(req, res);
-    // });
-  
-  
+
 }

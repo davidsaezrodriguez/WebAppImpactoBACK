@@ -13,7 +13,7 @@ exports.crearClase = (req, res) => {
 }
 
 exports.listarClases = (req, res) => {
-    modelos.modeloClase.find((err, clases) => {
+    modelos.modeloClase.find().sort([['inicio', -1]]).exec(function (err, clases) {
         if (err) return res.status(500).send('Error en el servidor');
         //Enviamos tablas del usuario que nos ha devuelto la bd
         res.send(clases);
@@ -57,7 +57,6 @@ exports.eliminarAlumnoClase = (req, res) => {
     const usuario = req.body.usuario;
     const idClase = req.body.idClase;
 
-    // Primero buscamos la clase para comprobar si esta llena
     modelos.modeloClase.update({ _id: idClase },{ '$pull': { 'alumnos': usuario } }, (err, clase) => {
         if (err) return res.status(500).send('Error en el servidor');
         res.send({ clase });
@@ -71,7 +70,7 @@ exports.buscarClase = (req, res) => {
     const idClase = req.body.idClase;
     modelos.modeloClase.find({ _id: idClase }, (err, clase) => {
         if (err) return res.status(500).send('Error en el servidor');
-        //Enviamos tablas del usuario que nos ha devuelto la bd
+        //Enviamos clase que nos ha devuelto la bd
         res.send({ clase });
     });
 }
@@ -83,7 +82,7 @@ exports.listarClasesAsiste = (req, res) => {
 
     modelos.modeloClase.find({ "alumnos": usuario }, (err, clasesAsiste) => {
         if (err) return res.status(500).send(err);
-        //Enviamos tablas del usuario que nos ha devuelto la bd
+        //Enviamos clases a las que asiste el usuario que nos ha devuelto la bd
         res.send({ clasesAsiste });
     });
 }
@@ -104,39 +103,7 @@ exports.listarClasesNoAsiste = (req, res) => {
                 clasesLlenas.push(clases[i])
             }
         }
-
-        //Enviamos tablas del usuario que nos ha devuelto la bd
+        //Enviamos clases a las que no asiste, divididas de llenas o las que hay hueco
         res.send({ clasesNoLlenas, clasesLlenas });
     });
 }
-
-// exports.listarClasesNoLlenas = (req, res) => {
-//     // Primero buscamos todas las clases
-//     modelos.modeloClase.find((err, clases) => {
-//         if (err) return res.status(500).send('Error en el servidor');
-//         let clasesNoLlenas = [];
-//         for (i = 0; i < clases.length; i++) {
-//             if (clases[i].maxAlumnos > clases[i].alumnos.length) {
-//                 clasesNoLlenas.push(clases[i])
-//             }
-//         }
-//         res.send({ clasesNoLlenas });
-//     });
-// }
-
-
-// exports.listarClasesLlenas = (req, res) => {
-//     // Primero buscamos todas las clases
-//     modelos.modeloClase.find((err, clases) => {
-//         if (err) return res.status(500).send('Error en el servidor');
-//         let clasesLlenas = [];
-//         for (i = 0; i < clases.length; i++) {
-//             if (clases[i].maxAlumnos <= clases[i].alumnos.length) {
-//                 clasesLlenas.push(clases[i])
-//             }
-//         }
-//         res.send({ clasesLlenas });
-//     });
-// }
-
-

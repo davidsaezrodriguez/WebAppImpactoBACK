@@ -10,7 +10,8 @@ exports.crearDieta = (req, res) => {
         res.send(dieta);
     });
 }
-// updatedAt
+
+// listamos las diestas del usuario ordenadas de mas nueva a mas vieja
 exports.listarDietasUsuario = (req, res) => {
     // Recogemos idUsuario recibido
     const idUsuario = req.body.idUsuario;
@@ -20,6 +21,7 @@ exports.listarDietasUsuario = (req, res) => {
         res.send({ dietas });
     });
 }
+
 exports.buscarDieta = (req, res) => {
     // Recogemos idDieta recibido
     const idDieta = req.body.idDieta;
