@@ -57,4 +57,29 @@ exports.eliminarTabla = (req, res) => {
         if (err) return res.status(500).send('Error en el servidor');
         res.send({ tabla });
     });
+
+}
+
+
+exports.copiarTabla = (req, res) => {
+    // Recogemos idTabla recibido
+    const idTabla = req.body.idTabla;
+    const idUsuario = req.body.idUsuario;
+
+    modelos.modeloTabla.find({ _id: idTabla }, (err, tabla) => {
+        if (err) return res.status(500).send('Error en el servidor busqueda de tabla');
+        const nuevaTabla = {
+            usuario: idUsuario,
+            nombre: tabla[0].nombre,
+            dia: tabla[0].dia,
+        }
+        modelos.modeloTabla.create(nuevaTabla, (err, tabla, next) => {
+            // Posibles errores
+            // if (err) return res.status(500).send('Error en el servidor creacion de tabla');
+            if (err) return res.send({ err })
+            res.send(tabla);
+        });
+    });
+
+
 }

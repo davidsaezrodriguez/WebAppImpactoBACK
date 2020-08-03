@@ -58,6 +58,9 @@ module.exports = (router) => {
     router.post('/eliminarTabla', comprobarToken, function (req, res) {
         controladorTablas.eliminarTabla(req, res);
     });
+    router.post('/copiarTabla', comprobarToken, function (req, res) {
+        controladorTablas.copiarTabla(req, res);
+    });
 
 
     // Rutas para ejercicios
